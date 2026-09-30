@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>商品說明｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/product.css?v=41">
+</head>
+<body data-page="product">
+  <div data-mg="header" data-variant="left" data-chip="all"></div>
+
+  <main id="main" class="page-product">
+    <!-- Figma 157:1759「商品說明頁面」。商品內容由 js/pages/product.js 依 ?id= 填入（預設 013） -->
+    <article class="pd" aria-labelledby="pd-code">
+      <div class="pd__media">
+        <figure class="pd-main"></figure>
+        <figure class="pd-detail">
+          <div class="pd-detail__zoom"></div>
+          <button class="pd-detail__toggle" type="button" aria-pressed="false" aria-label="放大細節圖">
+            <!-- ci:magnifying-glass-plus（Figma 334:11048） -->
+            <svg viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false"><path d="M11.6667 16.6667H16.6667M16.6667 16.6667H21.6667M16.6667 16.6667V11.6667M16.6667 16.6667V21.6667M25 25L35 35M16.6667 28.3333C15.1346 28.3333 13.6175 28.0316 12.202 27.4453C10.7866 26.859 9.50044 25.9996 8.41709 24.9162C7.33374 23.8329 6.47438 22.5468 5.88807 21.1313C5.30177 19.7158 5 18.1988 5 16.6667C5 15.1346 5.30177 13.6175 5.88807 12.202C6.47438 10.7866 7.33374 9.50044 8.41709 8.41709C9.50044 7.33374 10.7866 6.47438 12.202 5.88807C13.6175 5.30177 15.1346 5 16.6667 5C19.7609 5 22.7283 6.22916 24.9162 8.41709C27.1042 10.605 28.3333 13.5725 28.3333 16.6667C28.3333 19.7609 27.1042 22.7283 24.9162 24.9162C22.7283 27.1042 19.7609 28.3333 16.6667 28.3333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </figure>
+      </div>
+
+      <div class="pd__info">
+        <header class="pd-head">
+          <h1 class="pd-head__code" id="pd-code"></h1>
+          <p class="pd-head__price"></p>
+        </header>
+        <div class="pd-copy prose"></div>
+        <div class="pd-scales"></div>
+        <div class="pd-cta">
+          <button class="btn btn--lg btn--ivory" type="button" data-add-to-cart="013">加入購物車</button>
+        </div>
+        <ul class="pd-thumbs" aria-label="商品細節圖"></ul>
+      </div>
+    </article>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/product.js?v=41"></script>
+</body>
+</html>

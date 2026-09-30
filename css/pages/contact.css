@@ -1,0 +1,39 @@
+/* =========================================================
+   聯絡我們 / 客製化需求｜Multiverse Garden
+   沒有獨立的 Figma 設計稿：面板、pill 輸入框、select、textarea、
+   底部「文字連結＋右側按鈕」、送出後的結果面板，全部沿用結帳頁樣式。
+   ========================================================= */
+@import url("checkout.css?v=8");
+
+/* 頁面底色與結帳頁相同 */
+body[data-page="contact"] { background: var(--bg-page-checkout); }
+
+/* 600–1023 仍維持兩欄（1024 以上由 checkout.css 處理，600 以下單欄） */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .page-contact .co-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+
+/* 面板寬度不到 400px（兩欄的平板、手機）時，標籤移到欄位上方 */
+.page-contact .co-panel { container-type: inline-size; }
+@container (max-width: 399px) {
+  .page-contact .co-field {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 8px;
+  }
+  .page-contact .co-field__label { white-space: normal; }
+}
+
+/* 還沒選的下拉選單（「請選擇」）與日期欄位用次要文字色，同 placeholder */
+.page-contact .co-select__control:invalid,
+.page-contact .co-input[type="date"]:invalid { color: var(--text-secondary); }
+.page-contact .co-select__control option { color: var(--text-primary); }
+
+/* 日期欄位：文字靠左（iOS）、日曆圖示可點 */
+.page-contact .co-input::-webkit-date-and-time-value { text-align: left; }
+.page-contact .co-input::-webkit-calendar-picker-indicator { cursor: pointer; }
+
+/* 需求說明（design.md：textarea 最小高 200） */
+.ct-textarea { height: 200px; }

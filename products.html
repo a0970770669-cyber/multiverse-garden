@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>商品列表｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/products.css?v=41">
+</head>
+<body data-page="products">
+  <div data-mg="header" data-variant="left" data-chip="all"></div>
+
+  <main id="main" class="page-products">
+    <!-- 往下捲動後取代 Header＋分類列的細條（Figma「商品頁面（nav bar 收起）」元件 187:4219） -->
+    <div class="collapse-bar" data-collapse-bar>
+      <button class="collapse-bar__all" type="button" aria-expanded="false" data-show-top>
+        <span>查看全部品項</span>
+        <span class="collapse-bar__chevron" data-icon="chevron"></span>
+      </button>
+      <button class="icon-btn" type="button" data-filter-toggle aria-label="篩選商品" aria-controls="filter-panel" aria-expanded="false">
+        <span data-icon="filter"></span>
+      </button>
+    </div>
+
+    <!-- 主視覺（Figma #168:2898，1440×676，影片） -->
+    <div class="products-hero">
+      <video class="products-hero__video" autoplay muted loop playsinline preload="auto" poster="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/hero/garden-hero.jpg" aria-hidden="true">
+        <source src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/video/hero.webm" type="video/webm">
+        <source src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/video/hero.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- 商品格線（Figma #157:1254），卡片由 js/pages/products.js 產生 -->
+    <section class="products-list" aria-label="商品列表">
+      <p class="products-search-title" id="product-search-title" hidden></p>
+      <div class="products-grid" id="product-grid"></div>
+      <p class="products-empty" id="product-empty" hidden>沒有符合條件的商品</p>
+    </section>
+
+    <!-- 篩選面板（Figma「商品設定頁面」#187:5076） -->
+    <div class="filter-panel" id="filter-panel" role="dialog" aria-modal="false" aria-label="篩選商品" tabindex="-1">
+      <form class="filter-panel__form" id="filter-form" novalidate>
+        <div class="filter-panel__groups">
+          <div class="filter-group" role="radiogroup" aria-labelledby="filter-budget-title">
+            <p class="filter-group__title" id="filter-budget-title">預算</p>
+            <div class="filter-group__options">
+              <label class="filter-option"><input type="radio" name="budget" value="1000-1999"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--budget">1000~1900$</span></label>
+              <label class="filter-option"><input type="radio" name="budget" value="2000-2999"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--budget">2000~2900$</span></label>
+              <label class="filter-option"><input type="radio" name="budget" value="3000-3999"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--budget">3000~3900$</span></label>
+              <label class="filter-option"><input type="radio" name="budget" value="4000-4999"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--budget">4000~4900$</span></label>
+              <label class="filter-option"><input type="radio" name="budget" value="5000-"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--budget">5000$ UP</span></label>
+            </div>
+          </div>
+          <div class="filter-group" role="group" aria-labelledby="filter-color-title">
+            <p class="filter-group__title" id="filter-color-title">色系</p>
+            <div class="filter-group__options">
+              <label class="filter-option"><input type="checkbox" name="color" value="暖色調"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">暖色調</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="冷色調"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">冷色調</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="紅色"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">紅色</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="黃色"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">黃色</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="橘色"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">橘色</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="藍色"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">藍色</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="紫色"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">紫色</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="白色"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">白色</span></label>
+              <label class="filter-option"><input type="checkbox" name="color" value="黑色"><span class="filter-option__dot" aria-hidden="true"></span><span class="filter-option__label filter-option__label--color">黑色</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="filter-panel__actions">
+          <div class="filter-panel__row">
+            <button class="btn btn--outline" type="reset">重置</button>
+            <button class="btn btn--outline" type="submit">確認</button>
+          </div>
+          <a class="btn btn--outline filter-panel__recommend" href="recommend.html">線上花禮推薦</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/products.js?v=41"></script>
+</body>
+</html>

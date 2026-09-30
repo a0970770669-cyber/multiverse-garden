@@ -1,0 +1,13 @@
+/* =========================================================
+   抓周派對｜Multiverse Garden
+   版型完全沿用商業空間案例頁（case.css，Figma「案例估價」270:8816）。
+   ─ 照片尚未提供：兩張大圖與 4 格細節圖的位置、尺寸、圓角都保留，
+     先以 --bg-elevated 的空白區塊呈現（HTML 上 aria-hidden）。
+   ─ 頁面底色用預設 --bg-page：case 頁的米白底和區塊同色，區塊會看不見。
+     Footer 也就用共用預設樣式（case 頁的 Footer 覆寫只作用在 .page-case）。
+   ========================================================= */
+@import url("case.css?v=8");
+
+.page-party .case-ph { background: var(--bg-elevated); }
+/* 細節圖 4 格沿用 case 頁的 1px 內框線，格子才分得出來 */
+.page-party .case-details__item.case-ph { box-shadow: inset 0 0 0 1px var(--border-default); }

@@ -1,0 +1,270 @@
+/* 商品列表｜Multiverse Garden
+   Figma：商品頁面 157:1236 · 卡片放大版 187:4059（hover）· nav bar 收起 187:3148 · 商品設定頁面 187:4888
+   版面（1440）：Header＋分類列 0–136 → 31 → 主視覺 1440×676 → 31 → 商品格線（padding 40/80）→ 31 → Footer */
+
+.page-products { padding-bottom: 31px; }
+
+/* ---------- Header＋分類列：捲動收起 / 往上捲或點「查看全部品項」再展開 ---------- */
+body[data-page="products"] .site-top {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  transition: transform var(--dur) var(--ease);
+}
+body[data-page="products"] .site-top.is-collapsed { transform: translateY(-100%); }
+
+/* 細條（Figma 187:4219：高 80、淺色底 60% 不透明；改用 surface 半透明＋模糊） */
+.collapse-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 41;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 var(--page-gutter);
+  background: var(--color-surface);
+  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition: transform var(--dur) var(--ease), visibility 0s linear var(--dur);
+}
+.collapse-bar.is-visible {
+  transform: none;
+  visibility: visible;
+  transition: transform var(--dur) var(--ease);
+}
+.collapse-bar__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  font: var(--text-nav);
+  color: var(--text-primary);
+  transition: color var(--dur-fast) var(--ease);
+}
+.collapse-bar__all:hover { color: var(--accent-secondary); }
+.collapse-bar__chevron { display: block; }
+.collapse-bar__chevron svg { width: 11px; height: 7px; }
+.collapse-bar .icon-btn > span,
+.collapse-bar .icon-btn svg { display: block; width: 24px; height: 24px; }
+
+/* ---------- 主視覺（影片，1440×676，object-fit: cover） ---------- */
+.products-hero {
+  max-width: var(--page-max);
+  margin: 31px auto 0;
+  aspect-ratio: 1440 / 676;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.products-hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- 商品格線（4 欄、卡片 280、欄距 53、列距 200） ---------- */
+.products-grid,
+.products-empty {
+  max-width: var(--page-max);
+  margin: 31px auto 0;
+  padding: 40px 80px;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 280px));
+  column-gap: 53px;
+  row-gap: 200px;
+}
+.products-grid[hidden],
+.products-empty[hidden] { display: none; }
+/* 沒有結果：和花束／節日系列的「暫無商品」一樣置中、保留約一列商品卡的高度 */
+.products-empty {
+  display: grid;
+  place-items: center;
+  min-height: clamp(300px, calc(23.8vw + 135px), 480px);
+  font: var(--text-body);
+  text-align: center;
+}
+
+/* 搜尋結果標題（?q=）：對齊格線左緣，格線緊接在下方 */
+.products-search-title {
+  max-width: var(--page-max);
+  margin: 31px auto 0;
+  padding: 40px 80px 0;
+  font: var(--text-body);
+}
+.products-search-title[hidden] { display: none; }
+.products-search-title:not([hidden]) + .products-grid { margin-top: 0; }
+
+/* ---------- 卡片 hover：原圖淡出，去背圖淡入並放大到 Figma「卡片放大版」的構圖 ----------
+   去背圖檔已裁成 Figma 的放大構圖，四周各多留 1/18 的透明邊（整張 = 卡片的 10/9），
+   所以 scale(0.9) 剛好貼齊卡片、scale(1) 就是設計稿的畫面。 */
+.page-products .product-card__media {
+  transition: background-color var(--dur) var(--ease);
+}
+.page-products .product-card__cutout {
+  position: absolute;
+  top: -5.5556%;
+  left: -5.5556%;
+  width: 111.1111%;
+  max-width: none;
+  height: 111.1111%;
+  object-fit: fill;
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+/* .product-card--cutout：有去背圖的卡片（只有可 hover 的裝置才會載入，見 js/pages/products.js） */
+@media (hover: hover) {
+  .products-grid a.product-card--cutout:hover .product-card__media { background-color: transparent; }
+  .products-grid a.product-card--cutout:hover .product-card__media img { opacity: 0; }
+  .products-grid a.product-card--cutout:hover .product-card__media .product-card__cutout { opacity: 1; transform: scale(1); }
+}
+.products-grid a.product-card--cutout:focus-visible .product-card__media { background-color: transparent; }
+.products-grid a.product-card--cutout:focus-visible .product-card__media img { opacity: 0; }
+.products-grid a.product-card--cutout:focus-visible .product-card__media .product-card__cutout { opacity: 1; transform: scale(1); }
+
+/* ---------- 篩選面板（Figma 187:5076：寬 280、高 1024、padding 40、左側圓角 8） ---------- */
+.filter-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 60;
+  width: 280px;
+  max-width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 40px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  box-shadow: var(--shadow-panel);
+  transform: translateX(calc(100% + 60px));
+  visibility: hidden;
+  transition: transform var(--dur) var(--ease), visibility 0s linear var(--dur);
+}
+.filter-panel.is-open {
+  transform: none;
+  visibility: visible;
+  transition: transform var(--dur) var(--ease);
+}
+.filter-panel__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 45px;
+  min-height: 100%;
+}
+.filter-panel__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  padding-top: 18px;          /* Figma：標題從 y=58 開始 */
+}
+.filter-group__title {
+  margin-bottom: 11px;        /* Figma：標題框 19 + 間距 16 → 第一個選項 */
+  font: var(--text-ui-strong);
+}
+.filter-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.filter-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  cursor: pointer;
+}
+.filter-option input {       /* 原生 radio / checkbox：保留鍵盤操作，外觀改畫成 Figma 的圓 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.filter-option__dot {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+.filter-option__dot::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--text-secondary);
+  border-radius: var(--radius-full);
+  background: var(--bg-page);
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.filter-option input:checked + .filter-option__dot::before {
+  border-color: var(--text-primary);
+  background: var(--text-primary);
+}
+.filter-option input:focus-visible + .filter-option__dot {
+  outline: 2px solid var(--accent-secondary);
+  outline-offset: -2px;
+  border-radius: var(--radius-full);
+}
+.filter-option__label--budget { font: var(--text-ui); }
+.filter-option__label--color {
+  min-width: 3em;             /* Figma：色系文字框同寬、置中 */
+  font: var(--text-ui);
+  text-align: center;
+}
+
+.filter-panel__actions {          /* Figma「Frame 169」：寬 204，按鈕 96×40 ＋ 12 ＋ 96×40，下方 200×40 置中 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 204px;
+}
+.filter-panel__row {
+  display: flex;
+  gap: 12px;
+}
+.filter-panel__actions .btn { padding: 0 31px; }   /* 31 ＋ 1px 外框 = Figma 的 32 */
+.filter-panel__recommend { width: 200px; }
+
+/* ---------- Responsive ----------
+   使用者要求：和設計稿一樣一排 4 張。1440 以下依比例縮小（左右 80、欄距 53、列距 200 皆 ÷1440），
+   只有 600 以下的手機改成一排 2 張。 */
+@media (max-width: 1439px) {
+  .products-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 40px 5.556vw;
+    column-gap: 3.681vw;
+    row-gap: 13.889vw;
+  }
+  .products-empty { padding: 40px 5.556vw; }
+  .products-search-title { padding: 40px 5.556vw 0; }
+}
+
+@media (max-width: 767px) {
+  /* 不用 aspect-ratio＋min-height（min-height 會經由比例變成最小寬度而撐破版面） */
+  .products-hero { aspect-ratio: auto; height: max(240px, 46.944vw); }
+}
+
+@media (max-width: 599px) {
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 32px var(--page-gutter);
+    column-gap: 16px;
+    row-gap: 48px;
+  }
+  .products-empty { padding: 32px var(--page-gutter); }
+  .products-search-title { padding: 32px var(--page-gutter) 0; }
+}

@@ -1,0 +1,62 @@
+/* =========================================================
+   花藝體驗課程｜Multiverse Garden
+   沒有獨立的 Figma 設計稿：面板、pill 輸入框、select、−/+ 數量控制、
+   金額列（合計 body-bold）、底部「文字連結＋右側按鈕」全部沿用結帳頁樣式。
+   ========================================================= */
+@import url("checkout.css?v=8");
+
+/* 頁面底色與結帳頁相同 */
+body[data-page="course"] { background: var(--bg-page-checkout); }
+
+/* 600–1023 仍維持兩欄（1024 以上由 checkout.css 處理，600 以下單欄） */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .page-course .co-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+
+/* 面板寬度不到 400px（兩欄的平板、手機）時，標籤移到欄位上方 */
+.page-course .co-panel { container-type: inline-size; }
+@container (max-width: 399px) {
+  .page-course .co-field,
+  .page-course .cs-info__row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 8px;
+  }
+  .page-course .co-field__label { white-space: normal; }
+  .page-course .cs-info__row { row-gap: 4px; }
+}
+
+/* 還沒選的下拉選單（「請選擇」）與日期欄位用次要文字色，同 placeholder */
+.page-course .co-select__control:invalid,
+.page-course .co-input[type="date"]:invalid { color: var(--text-secondary); }
+.page-course .co-select__control option { color: var(--text-primary); }
+
+/* 日期欄位：文字靠左（iOS）、日曆圖示可點 */
+.page-course .co-input::-webkit-date-and-time-value { text-align: left; }
+.page-course .co-input::-webkit-calendar-picker-indicator { cursor: pointer; }
+
+/* ---------- 課程資訊：標籤欄與下方欄位對齊（80 + 6） ---------- */
+.cs-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 40px 40px;
+}
+.cs-info__row {
+  display: grid;
+  grid-template-columns: minmax(80px, max-content) minmax(0, 1fr);
+  column-gap: 6px;
+  font: var(--text-body);
+  color: var(--text-primary);
+}
+.cs-info__row dt { font: var(--text-body-bold); }
+.cs-info__row dd { overflow-wrap: anywhere; }
+
+/* 人數（−/+）靠左，不撐滿欄位 */
+.cs-qty { justify-self: start; }
+
+@media (max-width: 768px) {
+  .cs-info { padding: 24px; }
+}

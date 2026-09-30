@@ -1,0 +1,99 @@
+/* 線上花禮推薦｜Multiverse Garden
+   Figma「線上花禮推薦」157:1504（1440×1024）：Header＋分類列 0–136 → 說明文字 60 →
+   商品卡片區（4 張 280 × 419、欄距 57、置中、上下內距 20）→ 推薦數值 130（列距 28）→ Footer */
+
+.page-recommend { padding-bottom: 32px; }
+
+/* ---------- 說明文字（Figma「文字」#509:2111：高 60、靠左 40） ---------- */
+.rec-intro {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: 0 var(--page-gutter);
+  font: var(--text-body);
+  font-weight: 500;
+}
+
+/* ---------- 推薦的 4 款花禮 ---------- */
+.rec-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 280px));
+  justify-content: center;
+  column-gap: 57px;
+  row-gap: 40px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 20px var(--page-gutter);   /* Figma：卡片區上下內距 20 */
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.rec-cards.is-fading { opacity: 0; }
+
+/* ---------- 拉桿（每列 591 寬：標題 32 ＋ 40 ＋ 519；軌道 360） ---------- */
+.rec-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 1px var(--page-gutter);
+}
+.rec-row {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  width: 591px;
+  max-width: 100%;
+}
+.rec-row__title {
+  flex: none;
+  min-width: 32px;
+  font: var(--text-body-bold);   /* Figma：Inter Bold 16 */
+}
+.rec-scale {
+  flex: 1 1 519px;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr 360px 1fr;
+  align-items: center;
+  font: var(--text-ui);
+}
+.rec-scale__end {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;              /* 色調列：圖示 24px 自帶留白，緊貼文字（同設計稿） */
+  white-space: nowrap;
+}
+/* 個性列：圖示 16px 比較小，留 4 的間距（同設計稿） */
+.rec-row + .rec-row .rec-scale__end { gap: 4px; }
+.rec-scale__end img { display: block; flex: none; }
+.rec-scale__end--right { justify-self: end; }
+.rec-scale .mg-range { --range-thumb: var(--accent); }
+
+/* ---------- Responsive ----------
+   和設計稿一樣一排 4 張：1440 以下依比例縮小（左右約 74.5、欄距 57 皆 ÷1440），600 以下才改 2 欄 */
+@media (max-width: 1439px) {
+  .rec-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 3.958vw;
+    padding: 20px 5.174vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .rec-row { width: 100%; gap: 16px; }
+  .rec-scale {
+    grid-template-columns: 4em minmax(0, 1fr) 4em;   /* 兩條軌道對齊（同設計稿） */
+    column-gap: 12px;
+  }
+}
+
+/* 手機 2 欄：4 款推薦與拉桿能在同一個畫面附近，拖曳時看得到結果變化 */
+@media (max-width: 599px) {
+  .rec-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 32px;
+    padding: 24px var(--page-gutter) 32px;
+  }
+}

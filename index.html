@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Alkalami&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/home.css?v=41">
+</head>
+<body data-page="home">
+  <div data-mg="header" data-variant="left" data-chip="all"></div>
+
+  <main id="main" class="page-home">
+    <!-- 主視覺（Figma「main」228:7603）：左側品牌介紹＋大字 Logo｜右側 878 × 952 的照片 -->
+    <section class="home-hero" aria-label="品牌介紹">
+      <div class="home-hero__intro">
+        <div class="home-hero__text">
+          <p>在我們日常的認知之外，有個名為 Multiverse Garden 的多重宇宙花叢，在那裏，花草不需由陽光、空氣與水所灌溉，植物不依靠土壤生長...</p>
+          <p>植物的生長靠著使用者透過介面的互動，由平面的牆長出不同質地的植物、從花器裡長出吸睛的植物藝術裝置，在這個宇宙裡，花藝就如同藝術品般的被觸碰、雕塑及欣賞。</p>
+        </div>
+        <h1 class="home-hero__logo"><img src="assets/logo.svg" alt="Multiverse Garden" width="455" height="56"></h1>
+      </div>
+      <div class="home-hero__visual">
+        <!-- 舞台 = Figma 的 878 × 952 裁切。靜止時停在影片的第一格（＝設計稿的那張照片）；
+             滑鼠進到主視覺就往前播——牆上的花會長出來，離開再倒回原狀（js/pages/home.js）。 -->
+        <div class="home-hero__stage">
+          <video class="home-hero__video" muted playsinline preload="auto" poster="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/hero/garden-hero.jpg" width="1152" height="768" aria-hidden="true">
+            <!-- mp4 放前面：同樣 1152 × 768，但位元率約為 webm 的兩倍，畫質較好 -->
+            <source src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/video/hero.mp4" type="video/mp4">
+            <source src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/video/hero.webm" type="video/webm">
+          </video>
+          <!-- 靜止時顯示的高解析度照片（1536 × 1024，跟 poster 同一張）。
+               影片只有 1152 × 768，播放時會比較軟；靜止時用這張才清晰。 -->
+          <img class="home-hero__still" src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/hero/garden-hero.jpg" alt="綠色牆面的房間裡，白色小羊漫步，紅色機械花從牆面長出" width="1536" height="1024" fetchpriority="high">
+        </div>
+        <p class="visually-hidden">綠色牆面的房間裡，白色小羊漫步；滑鼠移到畫面上時，紅色的花會從牆面長出來。</p>
+      </div>
+    </section>
+
+    <!-- OUR GARDEN（Figma「card」228:5949） -->
+    <section class="home-garden" aria-labelledby="home-garden-title">
+      <h2 class="home-title" id="home-garden-title">OUR GARDEN</h2>
+      <ul class="home-garden__list">
+        <li>
+          <a class="home-garden__card" href="recommend.html">
+            <span class="home-garden__photo" aria-hidden="true"><img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/products/p013.jpg" alt="" loading="lazy" decoding="async"></span>
+            <span class="home-garden__top">
+              <!-- lucide:sliders-horizontal -->
+            <svg class="home-garden__icon" width="32" height="32" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5H3m9 14H3M14 3v4m2 10v4m5-9h-9m9 7h-5m5-14h-7m-6 5v4m0-2H3"/></svg>
+            <span class="home-garden__index" aria-hidden="true">01</span>
+            </span>
+            <span class="home-garden__label"><span class="home-garden__title">花禮物推薦系統</span><span class="home-garden__en" aria-hidden="true">RECOMMENDATION</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="home-garden__card" href="arrange.html">
+            <span class="home-garden__photo" aria-hidden="true"><img src="assets/img/arrange/choose-center.jpg" alt="" loading="lazy" decoding="async"></span>
+            <span class="home-garden__top">
+              <!-- lucide:flower-2 -->
+            <svg class="home-garden__icon" width="32" height="32" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1"/><circle cx="12" cy="8" r="2"/><path d="M12 10v12m0 0c4.2 0 7-1.667 7-5c-4.2 0-7 1.667-7 5m0 0c-4.2 0-7-1.667-7-5c4.2 0 7 1.667 7 5"/></g></svg>
+            <span class="home-garden__index" aria-hidden="true">02</span>
+            </span>
+            <span class="home-garden__label"><span class="home-garden__title">線上插花體驗</span><span class="home-garden__en" aria-hidden="true">ARRANGEMENT</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="home-garden__card" href="decor.html">
+            <span class="home-garden__photo" aria-hidden="true"><img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/decor-013-main.jpg" alt="" loading="lazy" decoding="async"></span>
+            <span class="home-garden__top">
+              <!-- lucide:sprout -->
+            <svg class="home-garden__icon" width="32" height="32" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 9.536V7a4 4 0 0 1 4-4h1.5a.5.5 0 0 1 .5.5V5a4 4 0 0 1-4 4a4 4 0 0 0-4 4c0 2 1 3 1 5a5 5 0 0 1-1 3M4 9a5 5 0 0 1 8 4a5 5 0 0 1-8-4m1 12h14"/></svg>
+            <span class="home-garden__index" aria-hidden="true">03</span>
+            </span>
+            <span class="home-garden__label"><span class="home-garden__title">居家植物裝置</span><span class="home-garden__en" aria-hidden="true">DECORATION</span></span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 標語（Figma「slogen」228:5950） -->
+    <section class="home-slogan" aria-label="品牌標語">
+      <p class="home-slogan__text">A Garden You Enter <br>Through Your Eyes.</p>
+    </section>
+
+    <!-- PRODUCTS（Figma「bottom」228:6017，圖層名 Infinite Horizontal Marquee）：
+         4 張 320 × 400、間距 24。home.js 會複製項目做成由右往左的無限跑馬燈（可拖曳／滑動）；
+         沒有 JS 時就是 Figma 的靜態一排。 -->
+    <section class="home-products" aria-labelledby="home-products-title">
+      <h2 class="home-title" id="home-products-title">PRODUCTS</h2>
+      <div class="home-products__viewport">
+      <ul class="home-products__list">
+        <li>
+          <a class="home-products__item" href="product.html?id=016">
+            <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/products/p016.jpg" alt="商品 016：白色小花與捲曲草葉，銀色高腳杯" width="1200" height="1500" loading="lazy">
+          </a>
+        </li>
+        <li>
+          <a class="home-products__item" href="product.html?id=017">
+            <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/products/p017.jpg" alt="商品 017：綠色編織葉材雕塑，金屬層架" width="1200" height="1597" loading="lazy">
+          </a>
+        </li>
+        <li>
+          <a class="home-products__item" href="products.html">
+            <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/home/moss-tower.jpg" alt="粉色蘭花與苔蘚盤繞而上的塔狀花藝（前往全部商品）" width="645" height="860" loading="lazy">
+          </a>
+        </li>
+        <li>
+          <a class="home-products__item" href="product.html?id=015">
+            <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/products/p015.jpg" alt="商品 015：垂墜綠色莧花與葉材，銀色花器" width="1200" height="1588" loading="lazy">
+          </a>
+        </li>
+      </ul>
+      </div>
+    </section>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/home.js?v=41"></script>
+</body>
+</html>

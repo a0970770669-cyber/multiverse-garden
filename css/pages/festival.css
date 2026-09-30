@@ -1,0 +1,17 @@
+@import url("products.css?v=8");
+
+/* 節日系列｜Multiverse Garden
+   版型同商品列表：Header＋分類列 → 31 → 主視覺影片（1440×676，樣式在 products.css）→ 31 → 商品區 → 31 → Footer。
+   目前沒有節日系列商品：商品區只放一行「暫無商品」，保留約一列商品卡的高度，Footer 不會直接頂上來。 */
+.page-festival { padding-bottom: 31px; }
+
+.catalog-empty {
+  display: grid;
+  place-items: center;
+  max-width: var(--page-max);
+  min-height: clamp(300px, calc(23.8vw + 135px), 480px);
+  margin: 31px auto 0;
+  padding: 40px var(--page-gutter);
+  font: var(--text-body);
+  text-align: center;
+}

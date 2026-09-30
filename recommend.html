@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>線上花禮推薦｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/recommend.css?v=41">
+</head>
+<body data-page="recommend">
+  <div data-mg="header" data-variant="left" data-chip="all"></div>
+
+  <main id="main" class="page-recommend">
+    <!-- 說明（Figma「文字」#509:2111，Inter Medium 16、靠左 40） -->
+    <p class="rec-intro">調整數值拉桿，系統將會推薦四款適合您期望的花禮</p>
+
+    <!-- 推薦的 4 款花禮（Figma「main 商品卡片」#157:1522），由 js/pages/recommend.js 依拉桿數值產生 -->
+    <section class="rec-cards" id="rec-cards" aria-label="推薦花禮"></section>
+
+    <!-- 推薦數值（Figma「main 推薦數值」#157:1529）：兩端的圖示同設計稿的 openmoji / game-icons -->
+    <div class="rec-controls">
+      <div class="rec-row">
+        <label class="rec-row__title" for="rec-tone">色調</label>
+        <div class="rec-scale">
+          <span class="rec-scale__end">暖<img src="assets/icons/tone-warm.svg" alt="" width="24" height="24"></span>
+          <input class="mg-range" type="range" id="rec-tone" name="tone" min="0" max="100" step="1" value="69" data-left="暖色調" data-right="冷色調">
+          <span class="rec-scale__end rec-scale__end--right">冷<img src="assets/icons/tone-cool.svg" alt="" width="24" height="24"></span>
+        </div>
+      </div>
+      <div class="rec-row">
+        <label class="rec-row__title" for="rec-personality">個性</label>
+        <div class="rec-scale">
+          <span class="rec-scale__end">溫柔<img src="assets/icons/mood-soft.svg" alt="" width="16" height="16"></span>
+          <input class="mg-range" type="range" id="rec-personality" name="personality" min="0" max="100" step="1" value="81" data-left="甜美溫柔" data-right="優雅個性">
+          <span class="rec-scale__end rec-scale__end--right">個性<img src="assets/icons/mood-bold.svg" alt="" width="16" height="16"></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/recommend.js?v=41"></script>
+</body>
+</html>

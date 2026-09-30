@@ -1,0 +1,378 @@
+/* 線上插花體驗｜Multiverse Garden
+   步驟 1 選擇盆花（#choose）→ 步驟 2 插花畫布（#make）→ 步驟 3 完成（#done）
+   尺寸依 Figma（1440 寬）；顏色、字級只用 tokens。 */
+
+.page-arrange [hidden] { display: none !important; }
+
+/* 切換步驟：淡入 */
+.arr-step { animation: arr-fade-in var(--dur) var(--ease); }
+@keyframes arr-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* =========================================================
+   步驟 1：選擇盆花（Figma 157:1563 / hover 162:2827）
+   ========================================================= */
+.arr-choose {
+  max-width: var(--page-max);
+  margin-inline: auto;
+}
+.arr-choose__list {
+  display: flex;
+  gap: 7px;
+  padding: 8px;
+}
+.arr-choice {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 470 / 646;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg-elevated);
+}
+.arr-choice__link { display: block; width: 100%; height: 100%; }
+.arr-choice img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur) var(--ease);
+}
+/* 滑過或聚焦時，其他兩張變暗（Figma：ink 50% 疊色 = --overlay-scrim）。
+   依使用者指示不加卡片內陰影。 */
+.arr-choice::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background: var(--overlay-scrim);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+@media (hover: hover) {
+  .arr-choice:hover img { transform: scale(1.02); }
+  .arr-choose__list:has(.arr-choice:hover) .arr-choice:not(:hover)::after { opacity: 1; }
+}
+.arr-choose__list:has(:focus-visible) .arr-choice:not(:has(:focus-visible))::after { opacity: 1; }
+.arr-choice__link:focus-visible { outline-offset: -4px; }
+
+.arr-choose__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 170px;
+  padding: 40px 80px;
+  font: var(--text-body);
+  text-align: center;
+}
+.arr-choose__cta { font: var(--text-body-bold); }
+
+/* =========================================================
+   步驟 2：插花畫布（Figma 162:2485 / 157:2185 / 162:2328）
+   左 花材 332 ｜ 分隔線 ｜ 中 畫布 664 ｜ 右 說明 404，高 828
+   ========================================================= */
+.arr-make {
+  display: flex;
+  align-items: stretch;
+  height: 828px;
+  padding-left: var(--page-gutter);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 花材：2 欄 150×150，垂直置中 */
+.arr-palette {
+  --cell: 150px;
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(2, var(--cell));
+  grid-auto-rows: var(--cell);
+  align-content: center;
+  justify-content: center;
+  width: calc(var(--cell) * 2 + 32px);
+  padding: 16px;
+}
+.arr-material {
+  position: relative;
+  display: block;
+  width: var(--cell);
+  height: var(--cell);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+.arr-material img {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  transition: transform var(--dur) var(--ease);
+}
+.arr-material:hover img { transform: scale(1.02); }
+.arr-material:focus-visible { outline-offset: -2px; }
+
+/* 垂直分隔線（x=372，高 695，上下置中） */
+.arr-make__divider {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 695px;
+  margin-right: -1px;
+  background: var(--border-default);
+}
+
+/* 畫布：邏輯尺寸固定 664×828，依可用空間等比縮放（JS 設定 transform） */
+.arr-canvas {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--bg-page);
+}
+.arr-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 664px;
+  height: 828px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  touch-action: pan-y;
+}
+.arr-vase {
+  position: absolute;
+  left: 170px;
+  top: 384.41px;
+  width: 296px;
+  height: 383px;
+  max-width: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.arr-flowers { position: absolute; inset: 0; }
+.arr-flower {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 50%;
+  touch-action: none;
+  cursor: grab;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.arr-flower img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.arr-flower.is-dragging { cursor: grabbing; will-change: transform; }
+.arr-flower.is-leaving { opacity: 0.4; }
+.arr-flower:focus { outline: none; }
+.arr-flower:focus-visible { outline: 2px solid var(--accent-secondary); outline-offset: 2px; }
+
+/* 從花材拖出時跟著指標的花 */
+.arr-ghost {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.arr-ghost.is-outside { opacity: 0.4; }
+.arr-ghost img { display: block; width: 100%; height: 100%; max-width: none; }
+.arr-is-dragging,
+.arr-is-dragging * { cursor: grabbing !important; }
+
+/* 右側說明面板 */
+.arr-panel {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 404px;
+  padding: 40px;
+  background: var(--bg-elevated);
+  border-radius: 0 0 0 var(--radius-sm);
+  box-shadow: var(--shadow-panel);
+  font: var(--text-body);
+  user-select: text;
+  -webkit-user-select: text;
+}
+/* 說明文字（Figma 499:1988，寬 324 = 404 − 左右 40）：標題 Inter Bold 16，
+   段落之間空一行 = 24 */
+.arr-guide { width: 324px; max-width: 100%; }
+.arr-guide__title { font: var(--text-body-bold); }
+.arr-guide > * + * { margin-top: 24px; }
+.arr-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.arr-actions .btn,
+.arr-done__actions .btn { width: 300px; max-width: 100%; }
+
+/* =========================================================
+   步驟 3：完成（Figma 162:2424）
+   背景照片 cover 滿版；作品依背景座標等比例放上去（JS 設定 scene 縮放）
+   ========================================================= */
+.arr-done { position: relative; }
+/* 高 828（Figma）；窄螢幕時縮成「畫布範圍剛好放得下」的高度（寬 × 768 / 620） */
+.arr-done__stage {
+  position: relative;
+  height: min(828px, 123.871vw);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.arr-done__scene {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1376px;
+  height: 768px;
+  transform-origin: 0 0;
+}
+.arr-done__bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1376px;
+  height: 768px;
+  max-width: none;
+}
+/* 畫布範圍（664×828）在背景照片上的位置：花器對齊 Figma 完成畫面 */
+.arr-done__work {
+  position: absolute;
+  left: 390.45px;
+  top: -1.53px;
+  width: 664px;
+  height: 828px;
+  overflow: hidden;
+  transform: scale(0.9342);
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+.arr-done__actions {
+  position: absolute;
+  right: 58px;
+  bottom: 55px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =========================================================
+   分享彈窗（Figma 256:7604；沿用 MG.modal，卡片加上 .share-card）
+   ========================================================= */
+.mg-modal__card.share-card {
+  width: 400px;
+  padding: 51px 16px 64px;
+  background: var(--bg-page);
+  box-shadow: none;
+  text-align: center;
+}
+.share-card__title { font: var(--text-body-bold); }
+.share-card__list {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 11px;
+}
+.share-card__link {
+  display: block;
+  width: 60px;
+  height: 60px;
+  transition: transform var(--dur) var(--ease);
+}
+.share-card__link:hover { transform: scale(1.02); }
+.share-card__link img { width: 60px; height: 60px; }
+.share-card .mg-modal__close {
+  top: 16px;
+  right: 15px;
+  width: 24px;
+  height: 24px;
+}
+.share-card .mg-modal__close svg { width: 24px; height: 24px; }
+.share-card .mg-modal__close::before { inset: -8px; }
+@media (min-width: 769px) {
+  .mg-modal--anchored .mg-modal__card.share-card {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 1279px) {
+  .arr-make { flex-wrap: wrap; height: auto; }
+  .arr-make__divider { align-self: stretch; height: auto; margin-block: 67px; }
+  .arr-panel {
+    flex: 0 0 calc(100% + var(--page-gutter));
+    width: auto;
+    margin-left: calc(-1 * var(--page-gutter));
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px 64px;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  .arr-palette { --cell: 120px; }
+  .arr-done__actions {
+    position: static;
+    align-items: center;
+    padding: 24px var(--page-gutter) 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .arr-choose__list { flex-direction: column; gap: 8px; }
+  .arr-choice { flex: none; width: 100%; }
+  .arr-choose__intro { min-height: 0; padding: 32px var(--page-gutter) 40px; }
+  .arr-choose__intro br { display: none; }
+
+  .arr-make { flex-direction: column; flex-wrap: nowrap; padding-left: 0; }
+  .arr-palette {
+    --cell: 104px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 8px var(--page-gutter);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .arr-palette::-webkit-scrollbar { display: none; }
+  .arr-palette > li { flex: none; }
+  .arr-material { touch-action: pan-x; }
+  .arr-make__divider { align-self: stretch; width: auto; height: 1px; margin: 0 var(--page-gutter); }
+  .arr-canvas { flex: none; width: 100%; aspect-ratio: 664 / 828; }
+  .arr-panel {
+    flex: none;
+    width: 100%;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 32px var(--page-gutter) 40px;
+  }
+}

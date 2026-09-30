@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>聯絡我們 / 客製化需求｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/contact.css?v=41">
+</head>
+<body data-page="contact">
+  <div data-mg="header" data-variant="left" data-group="service" data-chip="contact"></div>
+
+  <main id="main" class="page-contact">
+    <div class="co-page">
+      <h1 class="visually-hidden">聯絡我們 / 客製化需求</h1>
+
+      <!-- 顧客需求單（欄位、面板樣式沿用結帳頁 checkout.css）
+           展示用表單：欄位刻意不設 name，資料不會進網址、不儲存、不送出 -->
+      <form class="co-form" id="contact-form">
+        <div class="co-columns">
+
+          <section class="co-panel" aria-labelledby="ct-contact-title">
+            <h2 class="co-panel__title" id="ct-contact-title">聯絡資訊</h2>
+            <div class="co-fields">
+              <div class="co-field">
+                <label class="co-field__label" for="ct-name">姓名</label>
+                <input class="co-input" id="ct-name" type="text" autocomplete="name" required>
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="ct-tel">電話</label>
+                <input class="co-input" id="ct-tel" type="tel" inputmode="tel" autocomplete="tel" required
+                       pattern="(?=(?:[^0-9]*[0-9]){8})\+?[0-9\(\)\- ]{8,20}" data-hint="請輸入有效的電話號碼，例如 0912345678">
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="ct-email">Email</label>
+                <input class="co-input" id="ct-email" type="email" autocomplete="email" required spellcheck="false">
+              </div>
+            </div>
+          </section>
+
+          <section class="co-panel" aria-labelledby="ct-request-title">
+            <h2 class="co-panel__title" id="ct-request-title">需求內容</h2>
+            <div class="co-fields">
+              <div class="co-field">
+                <label class="co-field__label" for="ct-type">需求類型</label>
+                <span class="co-select">
+                  <select class="co-input co-select__control" id="ct-type" required>
+                    <option value="" disabled selected hidden>請選擇</option>
+                    <option value="case">商業空間</option>
+                    <option value="wedding">婚禮佈置</option>
+                    <option value="party">抓周派對</option>
+                    <option value="decor">居家擺設</option>
+                    <option value="bouquet">花束</option>
+                    <option value="festival">節日花禮</option>
+                    <option value="other">其他</option>
+                  </select>
+                  <svg viewBox="0 0 11.3131 6.88332" fill="none" aria-hidden="true" focusable="false"><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(0.664138 0.74761 -0.664138 0.74761 0 0.52864)" stroke="currentColor" stroke-linecap="round"/><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(-0.664138 0.74761 0.664138 0.74761 11.3131 0.52864)" stroke="currentColor" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="ct-method">討論方式</label>
+                <span class="co-select">
+                  <select class="co-input co-select__control" id="ct-method" required>
+                    <option value="" disabled selected hidden>請選擇</option>
+                    <option value="store">門市預約諮詢</option>
+                    <option value="online">與花藝師線上討論</option>
+                  </select>
+                  <svg viewBox="0 0 11.3131 6.88332" fill="none" aria-hidden="true" focusable="false"><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(0.664138 0.74761 -0.664138 0.74761 0 0.52864)" stroke="currentColor" stroke-linecap="round"/><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(-0.664138 0.74761 0.664138 0.74761 11.3131 0.52864)" stroke="currentColor" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="ct-date">預約日期</label>
+                <input class="co-input" id="ct-date" type="date" required data-min-days="1">
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="ct-slot">預約時段</label>
+                <span class="co-select">
+                  <select class="co-input co-select__control" id="ct-slot" required>
+                    <option value="" disabled selected hidden>請選擇</option>
+                    <option>10:00–12:00</option>
+                    <option>13:00–15:00</option>
+                    <option>15:00–17:00</option>
+                    <option>17:00–19:00</option>
+                  </select>
+                  <svg viewBox="0 0 11.3131 6.88332" fill="none" aria-hidden="true" focusable="false"><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(0.664138 0.74761 -0.664138 0.74761 0 0.52864)" stroke="currentColor" stroke-linecap="round"/><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(-0.664138 0.74761 0.664138 0.74761 11.3131 0.52864)" stroke="currentColor" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="ct-budget">預算</label>
+                <input class="co-input" id="ct-budget" type="text" autocomplete="off">
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="ct-message">需求說明</label>
+                <textarea class="co-textarea ct-textarea" id="ct-message" autocomplete="off" required></textarea>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="co-actions">
+          <div class="text-links">
+            <a class="text-link" href="products.html">繼續購物</a>
+            <a class="text-link" href="#">訂閱我們</a>
+          </div>
+          <div class="co-actions__btns">
+            <button class="btn btn--lg btn--ivory co-btn" type="submit">送出需求單</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- 送出後：與「訂單成立」頁同樣外觀 -->
+      <div class="ct-result" data-contact-result hidden>
+        <section class="co-panel" aria-labelledby="ct-result-title">
+          <h2 class="co-panel__title" id="ct-result-title" tabindex="-1">需求單已送出</h2>
+          <div class="co-result__body">
+            <!-- boxicons:check-circle（同訂單成立頁） -->
+            <svg class="co-result__icon" viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false"><path d="M50 91.6667C27.0417 91.6667 8.33333 72.9583 8.33333 50C8.33333 27.0417 27.0417 8.33333 50 8.33333C72.9583 8.33333 91.6667 27.0417 91.6667 50C91.6667 72.9583 72.9583 91.6667 50 91.6667ZM50 16.6667C31.625 16.6667 16.6667 31.625 16.6667 50C16.6667 68.375 31.625 83.3333 50 83.3333C68.375 83.3333 83.3333 68.375 83.3333 50C83.3333 31.625 68.375 16.6667 50 16.6667Z" fill="currentColor"/><path d="M41.6667 66.6667C40.5833 66.6667 39.5417 66.25 38.7083 65.4583L26.2083 52.9583L32.0833 47.0833L41.625 56.625L63.6667 34.5833L69.5417 40.4583L44.5417 65.4583C43.7083 66.2917 42.6667 66.6667 41.5833 66.6667H41.6667Z" fill="currentColor"/></svg>
+          </div>
+        </section>
+
+        <div class="co-actions">
+          <div class="text-links">
+            <a class="text-link" href="products.html">繼續購物</a>
+          </div>
+          <div class="co-actions__btns">
+            <a class="btn btn--lg btn--ivory co-btn" href="#" data-calendar>加入行事曆</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/contact.js?v=41"></script>
+</body>
+</html>

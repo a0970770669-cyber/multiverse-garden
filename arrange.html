@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>線上插花體驗｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/arrange.css?v=41">
+</head>
+<body data-page="arrange">
+  <div data-mg="header" data-variant="center"></div>
+
+  <main id="main" class="page-arrange">
+    <!-- 步驟 1：選擇盆花（#choose） -->
+    <section class="arr-step arr-choose" id="arr-choose" data-step="choose" aria-labelledby="arr-choose-title">
+      <h1 class="visually-hidden" id="arr-choose-title">線上插花體驗</h1>
+      <ul class="arr-choose__list">
+        <li class="arr-choice">
+          <img src="assets/img/arrange/choose-left.jpg" width="940" height="1292" alt="藍綠色繡球花搭配青色果實與綠葉，插在古銅色高腳花器中的盆花">
+        </li>
+        <li class="arr-choice">
+          <a class="arr-choice__link" href="#make" aria-label="選擇米色貝殼陶瓶的盆花，開始線上插花">
+            <img src="assets/img/arrange/choose-center.jpg" width="599" height="823" alt="">
+          </a>
+        </li>
+        <li class="arr-choice">
+          <img src="assets/img/arrange/choose-right.jpg" width="939" height="1292" alt="淡藍色香豌豆與禾草插在銀色高腳杯中，放在白色大理石圓桌上的盆花">
+        </li>
+      </ul>
+      <div class="arr-choose__intro">
+        <p>歡迎來到 Multiverse Garden 的線上插花體驗，在這裡可以透過線上插花的過程，<br>感受花與花之間、花與花器之間、花與空間之間的關係。</p>
+        <p class="arr-choose__cta">挑選一盆您有興趣的盆花來體驗吧！</p>
+      </div>
+    </section>
+
+    <!-- 步驟 2：插花畫布（#make） -->
+    <section class="arr-step arr-make" id="arr-make" data-step="make" aria-labelledby="arr-make-title" hidden>
+      <h1 class="visually-hidden" id="arr-make-title">線上插花：插花畫布</h1>
+      <ul class="arr-palette" aria-label="花材（拖曳到畫布，或按 Enter 加入）" data-arr-palette></ul>
+      <div class="arr-make__divider" aria-hidden="true"></div>
+      <div class="arr-canvas" data-arr-canvas>
+        <div class="arr-stage" role="group" aria-label="插花畫布" aria-describedby="arr-notice-text" data-arr-stage>
+          <img class="arr-vase" src="assets/img/arrange/vase-shell.png" width="296" height="383" alt="米色貝殼陶瓶" draggable="false">
+          <div class="arr-flowers" data-arr-flowers></div>
+        </div>
+      </div>
+      <aside class="arr-panel" aria-label="插花說明">
+        <div class="arr-guide">
+          <h2 class="arr-guide__title">如何開始插花</h2>
+          <p id="arr-notice-text">挑選 2-3 種喜歡的花，拖曳至插花區，<br>按著SHIFT可以調整花朵的大小與轉向。</p>
+          <p>可挑選色塊面積較大的花，拼湊出盆花的外型輪廓，以姿態不同或是較細碎的植物點綴。</p>
+          <p>注意花朵之間的數量比例和花朵與盆器的大小比例關係，會讓盆花視覺氛圍更和諧。</p>
+        </div>
+        <div class="arr-actions">
+          <button class="btn btn--primary btn--lg" type="button" data-arr-finish>製作完成</button>
+          <a class="btn btn--neutral btn--lg" href="course.html">預約實體課</a>
+        </div>
+      </aside>
+      <p class="visually-hidden" id="arr-kbd-help">可用滑鼠或手指把花材拖曳到畫布上；也可以在花材上按 Enter 加入。選取畫布上的花後：方向鍵移動，Shift 加方向鍵調整大小與轉向，Delete 移除；拖出畫布也會移除。</p>
+      <p class="visually-hidden" role="status" aria-live="polite" data-arr-status></p>
+    </section>
+
+    <!-- 步驟 3：完成（#done） -->
+    <section class="arr-step arr-done" id="arr-done" data-step="done" aria-labelledby="arr-done-title" hidden>
+      <h1 class="visually-hidden" id="arr-done-title">線上插花：完成作品</h1>
+      <div class="arr-done__stage" data-arr-done-stage>
+        <div class="arr-done__scene" data-arr-scene>
+          <img class="arr-done__bg" src="assets/img/arrange/finished-bg.jpg" width="1376" height="768" alt="">
+          <div class="arr-done__work" role="img" data-arr-work></div>
+        </div>
+      </div>
+      <div class="arr-done__actions">
+        <button class="btn btn--primary btn--lg" type="button" data-arr-share>分享至社群</button>
+        <a class="btn btn--neutral btn--lg" href="course.html">預約實體課</a>
+      </div>
+    </section>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/arrange.js?v=41"></script>
+</body>
+</html>

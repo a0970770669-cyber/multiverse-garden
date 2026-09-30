@@ -1,0 +1,139 @@
+/* =========================================================
+   案例估價｜Christmas Pop-up
+   Figma「案例估價」270:8816（1440 × 2431）
+
+   ─ 區塊（Figma 座標）：上半 136–1379 · 細節圖 1499–1911 · 聯絡我們 2031–2183，
+     區塊間距 120（main 的 auto-layout gap）。Figma main 偏移 x = -2，這裡從 0 起算。
+   ─ 顏色：頁面底 #EDECE7 → --bg-elevated（鋪在 main 上）；
+     這頁 Footer 在 Figma 是 #FAFAFA 60%（比頁面亮）→ --bg-page；
+     細節圖內框線 #F5F5F5 → --border-default。
+   ─ 字級：標題 Alkalami 64 → --text-display-md（Alice）；段落標題 Inter Bold 16 →
+     --text-body-bold，內容 Inter Medium 16 → --text-body；兩段之間的空白行
+     （15px / 200%）→ .prose__gap（1.5em）；「其他商品」Alkalami 15 → .text-link。
+     行高改成 token 後，用 min-height 保留 Figma 的標題列高 83 與文字區塊高 432。
+   ========================================================= */
+
+.page-case { background: var(--bg-elevated); }
+.page-case + .site-footer { background: var(--bg-page); }
+
+/* 下方 5px：Figma「聯絡我們」底 2183 → Footer 2188 */
+.case {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-bottom: 5px;
+}
+
+/* ---------- 上半：左 602 × 800｜右 838 欄 ---------- */
+.case-intro {
+  display: grid;
+  grid-template-columns: 602px minmax(0, 1fr);
+  align-items: start;
+}
+
+.case-intro__main,
+.case-intro__sub {
+  overflow: hidden;
+  background: var(--bg-page);
+}
+.case-intro__main img,
+.case-intro__sub img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 夜景大圖：貼齊左緣，只有右側兩角圓角 8 */
+.case-intro__main {
+  aspect-ratio: 602 / 800;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.case-intro__side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+/* 標題與說明（Figma「Frame 114」：y 144、padding 42 / 34、間距 19） */
+.case-info {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  align-self: stretch;
+  min-height: 432px;
+  margin-top: 8px;
+  padding: 42px 34px;
+}
+.case-info__title {
+  display: flex;
+  align-items: center;
+  min-height: 83px;
+  font: var(--text-display-md);
+  color: var(--text-primary);
+}
+.case-info__body { color: var(--text-primary); }
+
+/* 白天大圖 556 × 735：在右欄置中，上緣 y 644（文字區塊底 576 + 68） */
+.case-intro__sub {
+  width: calc(556 / 838 * 100%);
+  aspect-ratio: 556 / 735;
+  margin-top: 68px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- 細節圖：4 張 360 × 412 滿版、無間距，內框線 1px ---------- */
+.case-details {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.case-details__item {
+  aspect-ratio: 360 / 412;
+  overflow: hidden;
+  background: var(--bg-page);
+}
+.case-details__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  outline: 1px solid var(--border-default);
+  outline-offset: -1px;
+}
+
+/* ---------- 聯絡我們 + 其他商品：靠右，按鈕 171 × 56 ---------- */
+/* 按鈕頂 2047、連結 2113（區塊 2031–2183） */
+.case-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  min-height: 152px;
+  padding: 16px var(--page-gutter) 40px;
+}
+.case-contact__btn { min-width: 140px; }
+
+/* ---------- Responsive ---------- */
+/* 768–1279：兩欄等比縮放（602 : 838） */
+@media (max-width: 1279px) {
+  .case-intro { grid-template-columns: minmax(0, 602fr) minmax(0, 838fr); }
+  .case-info { min-height: 0; }
+  .case { gap: 96px; }
+}
+
+/* < 600：單欄（600 以上維持設計稿的兩欄，使用者要求） */
+@media (max-width: 599px) {
+  .case { gap: 64px; }
+  .case-intro { grid-template-columns: minmax(0, 1fr); }
+  .case-info { margin-top: 0; padding: 32px var(--page-gutter); gap: 16px; }
+  .case-info__title { min-height: 0; }
+  .case-intro__sub {
+    width: calc(100% - 2 * var(--page-gutter));
+    margin-top: 16px;
+  }
+  .case-details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .case-contact { min-height: 0; padding: 0 var(--page-gutter) 48px; }
+}

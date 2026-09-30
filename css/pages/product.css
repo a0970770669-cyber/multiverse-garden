@@ -1,0 +1,196 @@
+/* 商品說明｜Multiverse Garden
+   Figma 157:1759「商品說明頁面」（加入購物車後的側欄 223:5693 由 components.css 的 .cart-drawer 處理）
+   1440 寬：main 上下 padding 16｜左欄 684（左右 40，主圖 604×800、半圓細節圖 604×447，間距 40）
+            右欄 756（編號價格 → 說明文字 → 拉桿 → 加入購物車 → 4 張縮圖，間距 16）
+   main 結束後到 Footer 留白 128。 */
+
+.pd {
+  display: grid;
+  grid-template-columns: minmax(0, 684fr) minmax(0, 756fr);
+  align-items: start;
+  max-width: var(--page-max);
+  margin: 0 auto 128px;
+  padding: 16px 0;
+}
+
+/* ---------- 左欄：主圖 + 半圓細節圖 ---------- */
+.pd__media {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 40px 0 var(--page-gutter);
+}
+
+/* 「商品大圖」元件：左側直角、右側圓角 8 */
+.pd-main {
+  position: relative;
+  aspect-ratio: 604 / 800;
+  overflow: hidden;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg-elevated);
+}
+.pd-main__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 半圓細節圖（Figma 334:11045）：上方圓角 8 的矩形 ∩ 橢圓 783×614，
+   橢圓中心在框的 (50.06%, 31.27%)，半徑為框寬 64.81%、框高 68.73%。 */
+.pd-detail {
+  position: relative;
+  aspect-ratio: 604 / 447;
+  overflow: hidden;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  clip-path: ellipse(64.81% 68.73% at 50.06% 31.27%);
+  background: var(--bg-elevated);
+  cursor: zoom-in;
+}
+.pd-detail__zoom {
+  position: absolute;
+  inset: 0;
+  transition: transform var(--dur) var(--ease);
+}
+.pd-detail__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 放大鏡：原地 2 倍放大，放大中跟著游標／手指移動 */
+.pd-detail.is-zoomed { cursor: zoom-out; touch-action: none; }
+.pd-detail.is-zoomed .pd-detail__zoom { transform: scale(2); }
+
+/* ci:magnifying-glass-plus 40×40（Figma：距上 22、距右 21） */
+.pd-detail__toggle {
+  position: absolute;
+  top: 22px;
+  right: 21px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  transition: color var(--dur-fast) var(--ease);
+}
+.pd-detail__toggle svg { width: 40px; height: 40px; }
+.pd-detail__toggle:hover { color: var(--accent-secondary); }
+
+/* 同一張圖以不同比例裁切（非 013 的商品只有一張圖）：寬高與位置由 product.js 計算 */
+.pd-crop {
+  position: absolute;
+  max-width: none;
+  object-fit: fill;
+}
+
+/* ---------- 右欄 ---------- */
+.pd__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* 編號 013（H1）＋ 價格（Body Bold），靠右、兩行置中對齊 */
+/* 編號與價格：整塊靠右（Figma「Frame 87 / 115」ai=MAX） */
+.pd-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: flex-end;
+  text-align: right;
+  margin-right: var(--page-gutter);
+}
+.pd-head__code { font: var(--text-code); }
+.pd-head__price { font: var(--text-body-bold); }
+
+/* 說明文字：文字框 667 寬，置中於左右 40 的內距中 */
+.pd-copy {
+  padding: 16px var(--page-gutter) 16px 40px;
+  word-break: keep-all;     /* 窄螢幕換行時只斷在標點／空白，放不下才任意斷 */
+  overflow-wrap: anywhere;
+}
+.pd-copy__inner {
+  max-width: 667px;
+  margin-inline: auto;
+}
+.pd-copy__block + .pd-copy__block { margin-top: 24px; }  /* 段落間空一行 */
+
+/* 兩條顯示用拉桿：489 寬的框（左內距 4）內置中，兩條軌道對齊 */
+.pd-scales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 489px;
+  max-width: calc(100% - 4px);
+  margin-left: 4px;
+  padding: 10px 0 4px;
+}
+
+.pd-cta {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px var(--page-gutter) 16px 40px;
+}
+
+/* 4 張細節縮圖 160×192，間距 12 */
+.pd-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 var(--page-gutter) 0 40px;
+}
+.pd-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 160 / 192;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+.pd-thumb__frame {
+  position: absolute;
+  inset: 0;
+  transition: transform var(--dur) var(--ease);
+}
+.pd-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pd-thumb:hover .pd-thumb__frame { transform: scale(1.02); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1023px) {
+  .pd-scales .mg-scale {
+    grid-template-columns: max-content minmax(80px, 200px) max-content;
+    column-gap: var(--space-4);
+  }
+}
+
+/* 600 以上維持設計稿的左右兩欄（縮圖一排 4 張）；
+   < 600（手機）才改單欄：主圖 → 縮圖 → 編號價格 → 說明 → 拉桿 → 加入購物車 → 半圓細節圖 */
+@media (max-width: 599px) {
+  .pd {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 64px;
+  }
+  .pd__media,
+  .pd__info { display: contents; }
+
+  .pd-main,
+  .pd-detail { margin-inline: var(--page-gutter); }
+  .pd-main { order: 1; }
+  .pd-thumbs { order: 2; padding-inline: var(--page-gutter); gap: 8px; }
+  .pd-head { order: 3; }
+  .pd-copy { order: 4; padding-inline: var(--page-gutter); }
+  .pd-scales { order: 5; align-self: center; margin-left: 0; max-width: calc(100% - 2 * var(--page-gutter)); }
+  .pd-cta { order: 6; padding-inline: var(--page-gutter); }
+  .pd-detail { order: 7; }
+}

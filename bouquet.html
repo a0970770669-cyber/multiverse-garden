@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>花束｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/bouquet.css?v=41">
+</head>
+<body data-page="bouquet">
+  <div data-mg="header" data-variant="left" data-group="bouquet" data-chip="none"></div>
+
+  <main id="main" class="page-bouquet">
+    <!-- 主視覺：沿用商品列表的品牌影片（版型同 products.html） -->
+    <div class="products-hero">
+      <video class="products-hero__video" autoplay muted loop playsinline preload="auto" poster="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/hero/garden-hero.jpg" aria-hidden="true">
+        <source src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/video/hero.webm" type="video/webm">
+        <source src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/video/hero.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <!-- 商品區：目前沒有花束商品 -->
+    <section class="catalog-list" aria-label="花束商品">
+      <p class="catalog-empty">暫無商品</p>
+    </section>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/bouquet.js?v=41"></script>
+</body>
+</html>

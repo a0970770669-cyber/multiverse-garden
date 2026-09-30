@@ -1,0 +1,349 @@
+/* =========================================================
+   首頁｜Multiverse Garden
+   Figma「landing page」157:1945（1440 × 2881）
+
+   ─ 區塊（Figma 座標）：主視覺 136–1088 · OUR GARDEN 1090–1590 ·
+     標語 1588–1836 · PRODUCTS 1838–2561 · Footer 2641。
+     Figma 的區塊 frame 有 ±2px 偏移（x = -2 / 2），這裡一律從 0 起算、上下相接。
+   ─ 顏色：頁面底 #F2F2EF → --bg-page-home；主視覺左側面板 #EDECE7、
+     OUR GARDEN 卡片 #EAEAE6 → --bg-elevated。
+   ─ 字級：OUR GARDEN / PRODUCTS 依設計稿用 Alkalami 40 → --text-section-title 全大寫，
+     以 min-height 76 保留 Figma 的標題列高；Inter Medium 16 / 150% → --text-body；
+     標語 Alice 72 → --text-display-lg。
+   ─ 主視覺圖片在 Figma 是靜態 IMAGE（不是影片），圖層水平鏡射；設計稿已移除白色圓形。
+     照片的滑鼠平移、PRODUCTS 跑馬燈依使用者回饋加上（js/pages/home.js）。
+   ─ 版面：≥1280 照設計稿；600–1279 主視覺維持「左文字｜右圖片」兩欄等比縮放、
+     OUR GARDEN 一排三張；<600 才改上下排／單欄。
+   ========================================================= */
+
+body[data-page="home"] { background: var(--bg-page-home, var(--bg-page)); }
+
+.home-hero,
+.home-garden,
+.home-slogan,
+.home-products {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+}
+
+/* ---------- 主視覺：左 562 米白面板｜右 878 × 952 圖片 ---------- */
+.home-hero {
+  container-type: inline-size;   /* 右欄最小高度用 cqw 依主視覺寬度換算 */
+  display: grid;
+  grid-template-columns: 562px minmax(0, 1fr);
+  background: var(--bg-elevated);
+}
+
+/* 文字頂端 267、Logo 底 973（主視覺 136–1088）→ 上 131 / 下 115 */
+.home-hero__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-width: 0;
+  padding: 131px 0 115px;
+}
+.home-hero__text {
+  max-width: 440px;
+  margin: 0 24px 0 64px;
+  font: var(--text-body);
+  color: var(--text-primary);
+}
+.home-hero__logo {
+  margin: 0 24px 0 52px;
+}
+.home-hero__logo img {
+  width: 455px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 右側圖片區：高度至少維持 878:952（1440 時 952）；左欄文字較高時跟著拉高。 */
+.home-hero__visual {
+  position: relative;
+  min-height: calc((100cqw - 562px) * 952 / 878);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+/* 舞台（Figma 的 878 × 952 畫面）：以 cover 方式置中放進圖片區——框比例相同時就是框本身，
+   框被拉高時舞台等比放大、左右裁切。照片放在舞台上，永遠跟著等比縮放。 */
+.home-hero__stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  aspect-ratio: 878 / 952;
+  transform: translate(-50%, -50%);
+}
+
+/* 主視覺影片：原片 1152 × 768，設計稿的圖層是水平鏡射的，所以整個元素做 scaleX(-1)，
+   靜止時的畫面（＝影片第一格／poster）就跟設計稿完全一樣。
+   高度對齊舞台、寬度 = 100% × 1152/768 × 952/878 = 162.64%，焦點放在畫面寬度的 66%
+   （設計稿裁切原圖 x 3.1%–64.7%，鏡射後就是 66%）。
+   滑鼠進來往前播、離開倒帶，都由 js/pages/home.js 控制，這裡不做任何動畫。 */
+.home-hero__video {
+  position: absolute;
+  left: -57.34%;
+  top: 0;
+  width: 162.64%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform: scaleX(-1);
+  background: var(--bg-elevated);
+}
+
+/* 靜止時顯示的照片：跟影片同一個裁切疊在上面。影片只有 1152 × 768，
+   放到主視覺會被放大而變軟；這張是 1536 × 1024，靜止時看起來才清晰。
+   滑鼠進來時淡出（換成會動的影片），倒帶回第一格後再淡回來。 */
+.home-hero__still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 8% 50%;
+  transform: scaleX(-1);
+  pointer-events: none;
+  transition: opacity 320ms var(--ease);
+}
+.home-hero__visual.is-blooming .home-hero__still { opacity: 0; }
+
+/* ---------- 區塊標題（OUR GARDEN / PRODUCTS） ---------- */
+.home-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 76px;
+  font: var(--text-section-title);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+/* ---------- OUR GARDEN：3 張 368 × 224，間距 24 ---------- */
+.home-garden {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 80px var(--page-gutter);
+}
+.home-garden__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 368px));
+  justify-content: center;
+  gap: 24px;
+}
+/* 卡片：尺寸維持設計稿的 368 × 224，但改成有層次的編輯式排版——
+   icon 在左上、編號在右上、標題落在左下，滑鼠移上時細框變深、icon 微微抬起、
+   標題下方的細線由左往右展開。留白是刻意的，安靜但有結構。 */
+.home-garden__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 224px;   /* 設計稿的卡片高度 */
+  height: 100%;
+  padding: 28px 32px;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  transition: border-color var(--dur) var(--ease);
+}
+.home-garden__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+.home-garden__icon {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  transition: transform var(--dur) var(--ease);
+}
+.home-garden__index {
+  font: var(--text-label);
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+.home-garden__label {
+  position: relative;
+  font: var(--text-h3);
+}
+/* 中文標題下的英文小標 */
+.home-garden__en {
+  display: block;
+  margin-top: 6px;
+  font: var(--text-label);
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+/* 標題下的細線：hover 時由左往右展開 */
+.home-garden__label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur) var(--ease);
+}
+/* 滑鼠移上時淡入的照片：壓一層「上淺下深」的遮罩——上半部看得到照片，
+   下半部維持淺底，標題與英文小標才不會被壓到。 */
+.home-garden__photo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 400ms var(--ease);
+}
+.home-garden__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-garden__photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--bg-elevated) 52%, transparent),
+    color-mix(in srgb, var(--bg-elevated) 80%, transparent));
+}
+.home-garden__top,
+.home-garden__label { position: relative; z-index: 1; }
+
+@media (hover: hover) {
+  .home-garden__card:hover .home-garden__photo { opacity: 1; }
+  .home-garden__card:hover { border-color: color-mix(in srgb, var(--text-primary) 20%, transparent); }
+  .home-garden__card:hover .home-garden__icon { transform: translateY(-2px); }
+  .home-garden__card:hover .home-garden__label::after { transform: scaleX(1); }
+}
+
+/* ---------- 標語 ---------- */
+.home-slogan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 248px;
+  padding: 0 var(--page-gutter);
+}
+.home-slogan__text {
+  font: var(--text-display-lg);
+  text-align: center;
+  color: var(--text-primary);
+}
+
+/* ---------- PRODUCTS：320 × 400，間距 24，從左緣排起 ----------
+   下方到 Footer：圖片底 2434 → Footer 2641 = 207 */
+.home-products {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 80px 0 207px;
+}
+.home-products__viewport { overflow: hidden; }
+
+/* 沒有 JS 時：Figma 的靜態一排（4 張，右側留白 88） */
+.home-products__list {
+  display: grid;
+  grid-template-columns: repeat(4, calc(320 / 1440 * 100%));
+  column-gap: calc(24 / 1440 * 100%);
+}
+.home-products__item {
+  display: block;
+  aspect-ratio: 320 / 400;
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+.home-products__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur) var(--ease);
+}
+.home-products__item:hover img { transform: scale(1.02); }
+
+/* 跑馬燈（home.js 加上 .is-marquee 並複製項目）：固定 320 × 400、間距 24 */
+.home-products.is-marquee .home-products__viewport {
+  cursor: grab;
+  touch-action: pan-y pinch-zoom;   /* 直向仍可捲動頁面，橫向交給拖曳 */
+  -webkit-user-select: none;
+  user-select: none;
+}
+.home-products.is-marquee .home-products__viewport.is-dragging,
+.home-products.is-marquee .home-products__viewport.is-dragging * { cursor: grabbing; }
+.home-products.is-marquee .home-products__list {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;   /* Safari：避免長條圖層在移動時重繪閃爍 */
+}
+.home-products.is-marquee .home-products__list > li {
+  flex: none;
+  width: 320px;
+}
+.home-products.is-marquee .home-products__item img { -webkit-user-drag: none; }
+.home-products.is-marquee .home-products__item:focus-visible { outline-offset: -2px; }  /* 外框不被裁掉 */
+
+/* ---------- Responsive ---------- */
+/* 600–1279：主視覺兩欄等比縮放（562 : 878），右欄高度依寬度維持 878:952；
+   左欄留白也依主視覺寬度（cqw）縮放，窄畫面時文字才放得下 */
+@media (max-width: 1279px) {
+  .home-hero { grid-template-columns: minmax(0, 562fr) minmax(0, 878fr); }
+  .home-hero__visual { min-height: calc(100cqw * 952 / 1440); }
+  .home-hero__intro {
+    gap: var(--space-4);
+    padding: clamp(32px, 9.1cqw - 20px, 131px) 0 clamp(24px, 8cqw - 20px, 115px);
+  }
+  .home-hero__text { margin: 0 clamp(12px, 1.67cqw, 24px) 0 clamp(16px, 4.44cqw, 64px); }
+  .home-hero__logo { margin: 0 clamp(12px, 1.67cqw, 24px) 0 clamp(16px, 3.61cqw, 52px); }
+}
+
+@media (max-width: 1023px) {
+  .home-hero__intro { gap: var(--space-3); }
+  .home-garden__card { padding: 76px 16px; }
+}
+
+@media (max-width: 767px) {
+  .home-garden { gap: var(--space-5); padding: 64px var(--page-gutter); }
+  .home-garden__list { gap: 16px; }
+  .home-slogan { min-height: 0; padding: 48px var(--page-gutter); }
+  .home-products { gap: var(--space-5); padding: 64px 0 96px; }
+}
+
+/* < 600：主視覺上下排（文字面板在上、圖片在下，比例不變）、卡片單欄 */
+@media (max-width: 599px) {
+  .home-hero { grid-template-columns: minmax(0, 1fr); }
+  .home-hero__visual { min-height: calc(100cqw * 952 / 878); }
+  .home-hero__intro { padding: 48px 0 32px; gap: var(--space-5); }
+  .home-hero__text { max-width: none; margin: 0 var(--page-gutter); }
+  .home-hero__logo { margin: 0 var(--page-gutter); }
+
+  .home-title { min-height: 0; }
+
+  .home-garden__list { grid-template-columns: minmax(0, 1fr); }
+  .home-garden__card { padding: 48px 24px; }
+
+  .home-slogan { padding: 32px var(--page-gutter); }
+  .home-slogan__text br { display: none; }   /* 窄螢幕自然換行，避免「Enter」單獨一行 */
+
+  .home-products:not(.is-marquee) .home-products__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0 var(--page-gutter);
+  }
+}

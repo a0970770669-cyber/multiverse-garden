@@ -1,0 +1,104 @@
+/* =========================================================
+   Multiverse Garden — design tokens
+   色彩與字體完全依照 design.md；尺寸、間距、陰影形狀依照 Figma 設計稿。
+   其他 CSS 只能引用這裡的變數，不要另外寫 HEX 或字級。
+   ========================================================= */
+:root {
+  /* ---- Brand palette (design.md §1.1) ---- */
+  --color-bg-ivory:    #EDECE7;
+  --color-brand-red:   #8B1F18;
+  --color-brand-olive: #696931;
+  --color-ink:         #212121;
+  --color-surface:     #FAFAFA;
+  --color-gray-500:    #9F9F9F;
+  --color-gray-200:    #D9D9D9;
+
+  /* ---- Semantic (design.md §1.4) ---- */
+  --bg-page:          var(--color-surface);
+  --bg-elevated:      var(--color-bg-ivory);
+  --text-primary:     var(--color-ink);
+  --text-secondary:   var(--color-gray-500);
+  --border-default:   var(--color-gray-200);
+  --accent:           var(--color-brand-red);
+  --accent-secondary: var(--color-brand-olive);
+  --btn-primary-bg:   var(--color-ink);
+  --btn-primary-fg:   var(--color-surface);
+  --btn-neutral-bg:   var(--color-gray-200);
+  --btn-neutral-fg:   var(--color-ink);
+
+  /* ---- 頁面底色例外（使用者指定：這幾頁依 Figma 的底色） ---- */
+  --bg-page-home:     #F2F2EF;   /* Figma「landing page」 */
+  --bg-page-checkout: #F5F5F5;   /* Figma「結帳頁面」、訂單成立、付款失敗 */
+
+  /* ---- Scrim & shadows ----
+     陰影的位移／模糊取自 Figma，顏色改用 ink（#212121），不用純黑。 */
+  --overlay-scrim:   rgba(33, 33, 33, 0.5);
+  --shadow-elevated: 0 8px 24px rgba(33, 33, 33, 0.08);
+  --shadow-header:   0 4px 60px rgba(33, 33, 33, 0.25);
+  --shadow-footer:   0 -8px 32px rgba(33, 33, 33, 0.06);   /* 精緻化：原 0 -4px 60px 25% 太重 */
+  --shadow-panel:    -2px 2px 40px rgba(33, 33, 33, 0.25);
+  --shadow-card:     -2px 2px 10px rgba(33, 33, 33, 0.25);
+
+  /* ---- Typography (design.md §2) ---- */
+  --font-display: "Alice", "Noto Serif TC", Georgia, serif;
+  --font-sans:    "Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --font-alkalami: "Alkalami", "Noto Serif TC", Georgia, serif;   /* 設計稿首頁區塊標題用字 */
+
+  --text-display-lg: 400 72px/1.1 var(--font-display);
+  --text-display-md: 400 64px/1.1 var(--font-display);
+  --text-h1:         500 48px/1.2 var(--font-sans);
+  --text-h2:         400 40px/1.2 var(--font-sans);
+  --text-h3:         500 20px/1.3 var(--font-sans);   /* 精緻化：原 24px，回到 Figma 面板標題的 20px */
+  --text-body:       400 16px/1.5 var(--font-sans);
+  --text-body-bold:  700 16px/1.5 var(--font-sans);
+  --text-caption:    400 12px/1.5 var(--font-sans);
+  --text-price:      400 14px/1.5 var(--font-sans);
+  --text-nav:        400 14px/1   var(--font-sans);
+
+  /* 精緻化調整（使用者同意，參考 Gentle Monster）：
+     按鈕、分類、表單標籤、文字連結統一 14px；商品說明等內文維持 16px */
+  --text-ui:         400 14px/1.5 var(--font-sans);
+  --text-ui-strong:  500 14px/1.5 var(--font-sans);
+  --text-label:      500 12px/1.5 var(--font-sans);   /* Footer 小標 ADDRESS…（搭配字距） */
+  --text-code:       400 32px/1.2 var(--font-sans);   /* 商品編號 013（原 H1 48px） */
+  /* 首頁 OUR GARDEN / PRODUCTS：依使用者指示改回設計稿的 Alkalami 40 */
+  --text-section-title: 400 40px/1.2 var(--font-alkalami);
+
+  /* ---- Spacing (design.md §4.1) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+
+  /* ---- Radius & border (design.md §5) ---- */
+  --radius-sm:   8px;
+  --radius-pill: 999px;
+  --radius-full: 50%;
+  --border: 1px solid var(--border-default);
+
+  /* ---- Motion (design.md §8) ---- */
+  --ease: ease-out;
+  --dur-fast: 200ms;
+  --dur: 300ms;
+
+  /* ---- Layout (Figma: 1440 寬，左右留白 40) ---- */
+  --page-max: 1440px;
+  --page-gutter: 40px;
+  --header-h: 72px;
+  --chipbar-h: 64px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --text-display-lg: 400 48px/1.1 var(--font-display);
+    --text-display-md: 400 40px/1.1 var(--font-display);
+    --text-h1:         500 32px/1.2 var(--font-sans);
+    --text-h2:         400 28px/1.2 var(--font-sans);
+    --text-section-title: 400 28px/1.2 var(--font-alkalami);
+    --page-gutter: 16px;
+  }
+}

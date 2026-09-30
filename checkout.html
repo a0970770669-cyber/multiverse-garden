@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>購物車與結帳｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/checkout.css?v=41">
+</head>
+<body data-page="checkout">
+  <div data-mg="header" data-variant="left"></div>
+
+  <main id="main" class="page-checkout">
+    <div class="co-page">
+      <h1 class="visually-hidden">購物車與結帳</h1>
+
+      <!-- 購物車（Figma Frame 197） -->
+      <section class="co-panel co-cart" aria-labelledby="co-cart-title">
+        <h2 class="co-panel__title" id="co-cart-title">購物車</h2>
+        <div class="co-cart__body" data-cart>
+          <!-- checkout.js 依 MG.cart.detailed() 產生商品列與運費／合計 -->
+        </div>
+      </section>
+
+      <!-- 展示用表單：欄位刻意不設 name，資料不會進網址、不儲存、不送出 -->
+      <form class="co-form" id="checkout-form">
+        <div class="co-columns">
+
+          <!-- 訂購資訊（Figma Frame 194） -->
+          <section class="co-panel" id="order-form" aria-labelledby="co-order-title">
+            <h2 class="co-panel__title" id="co-order-title">訂購資訊</h2>
+            <div class="co-fields co-fields--order">
+              <div class="co-field">
+                <label class="co-field__label" for="co-recipient">收件人</label>
+                <input class="co-input" id="co-recipient" type="text" autocomplete="shipping name" required>
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="co-recipient-tel">收件人電話</label>
+                <input class="co-input" id="co-recipient-tel" type="tel" inputmode="tel" autocomplete="shipping tel" required
+                       pattern="(?=(?:[^0-9]*[0-9]){8})\+?[0-9\(\)\- ]{8,20}" data-hint="請輸入有效的電話號碼，例如 0912345678">
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="co-address">收件地址</label>
+                <input class="co-input" id="co-address" type="text" autocomplete="shipping street-address" required>
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="co-buyer">訂購人</label>
+                <input class="co-input" id="co-buyer" type="text" autocomplete="name" required>
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="co-buyer-tel">訂購人電話</label>
+                <input class="co-input" id="co-buyer-tel" type="tel" inputmode="tel" autocomplete="tel" required
+                       pattern="(?=(?:[^0-9]*[0-9]){8})\+?[0-9\(\)\- ]{8,20}" data-hint="請輸入有效的電話號碼，例如 0912345678">
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="co-note">訂單備注</label>
+                <input class="co-input" id="co-note" type="text" autocomplete="off">
+              </div>
+              <div class="co-field">
+                <label class="co-field__label" for="co-card-message">卡片內容</label>
+                <textarea class="co-textarea" id="co-card-message" autocomplete="off"></textarea>
+              </div>
+            </div>
+          </section>
+
+          <div class="co-col">
+            <!-- 付款資訊（Figma Frame 196） -->
+            <section class="co-panel" aria-labelledby="co-payment-title">
+              <h2 class="co-panel__title" id="co-payment-title">付款資訊</h2>
+              <div class="co-fields co-fields--payment">
+                <div class="co-field">
+                  <label class="co-field__label" for="co-pay-method">付款方式</label>
+                  <span class="co-select">
+                    <select class="co-input co-select__control" id="co-pay-method">
+                      <option>信用卡付款</option>
+                    </select>
+                    <svg viewBox="0 0 11.3131 6.88332" fill="none" aria-hidden="true" focusable="false"><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(0.664138 0.74761 -0.664138 0.74761 0 0.52864)" stroke="currentColor" stroke-linecap="round"/><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(-0.664138 0.74761 0.664138 0.74761 11.3131 0.52864)" stroke="currentColor" stroke-linecap="round"/></svg>
+                  </span>
+                </div>
+                <div class="co-field">
+                  <label class="co-field__label" for="co-card-number">卡號</label>
+                  <input class="co-input" id="co-card-number" type="text" inputmode="numeric" autocomplete="cc-number" required
+                         maxlength="23" spellcheck="false" pattern="(?:[0-9][ \-]?){12,18}[0-9]" data-hint="請輸入 13–19 位數字的卡號">
+                </div>
+                <div class="co-field">
+                  <label class="co-field__label" for="co-card-name">持卡人姓名</label>
+                  <input class="co-input" id="co-card-name" type="text" autocomplete="cc-name" required spellcheck="false">
+                </div>
+                <div class="co-field">
+                  <label class="co-field__label" for="co-card-exp">有效期（MM / YY）</label>
+                  <input class="co-input" id="co-card-exp" type="text" inputmode="numeric" autocomplete="cc-exp" required
+                         maxlength="7" pattern="(?:0[1-9]|1[0-2]) ?\/? ?[0-9]{2}" data-hint="請依 MM / YY 格式輸入，例如 08 / 27">
+                </div>
+                <div class="co-field">
+                  <label class="co-field__label" for="co-card-cvc">安全碼</label>
+                  <input class="co-input" id="co-card-cvc" type="text" inputmode="numeric" autocomplete="cc-csc" required
+                         maxlength="4" pattern="[0-9]{3,4}" data-hint="請輸入 3 或 4 位數字的安全碼">
+                </div>
+              </div>
+            </section>
+
+            <!-- 索取發票（Figma Frame 197） -->
+            <section class="co-panel" aria-labelledby="co-invoice-title">
+              <h2 class="co-panel__title" id="co-invoice-title">索取發票</h2>
+              <div class="co-fields">
+                <div class="co-field">
+                  <label class="co-field__label" for="co-invoice-type">發票類型</label>
+                  <span class="co-select">
+                    <select class="co-input co-select__control" id="co-invoice-type">
+                      <option>雲端發票</option>
+                    </select>
+                    <svg viewBox="0 0 11.3131 6.88332" fill="none" aria-hidden="true" focusable="false"><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(0.664138 0.74761 -0.664138 0.74761 0 0.52864)" stroke="currentColor" stroke-linecap="round"/><line x1="0.5" y1="-0.5" x2="8" y2="-0.5" transform="matrix(-0.664138 0.74761 0.664138 0.74761 11.3131 0.52864)" stroke="currentColor" stroke-linecap="round"/></svg>
+                  </span>
+                </div>
+                <div class="co-field">
+                  <label class="co-field__label" for="co-carrier">載具</label>
+                  <input class="co-input" id="co-carrier" type="text" autocomplete="off" spellcheck="false">
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- 底部列（Figma「加入購物車」frame） -->
+        <div class="co-actions">
+          <div class="text-links">
+            <a class="text-link" href="#">運費說明</a>
+            <a class="text-link" href="#" data-after-sales="">售後服務</a>
+            <a class="text-link" href="#">訂閱我們</a>
+          </div>
+          <div class="co-actions__btns">
+            <button class="btn btn--lg btn--ivory co-btn" type="submit">確認付款</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/checkout.js?v=41"></script>
+</body>
+</html>

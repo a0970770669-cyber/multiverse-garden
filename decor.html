@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>居家擺設｜Multiverse Garden</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alice&family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css?v=41">
+  <link rel="stylesheet" href="css/base.css?v=41">
+  <link rel="stylesheet" href="css/components.css?v=41">
+  <link rel="stylesheet" href="css/pages/decor.css?v=41">
+</head>
+<body data-page="decor">
+  <div data-mg="header" data-variant="left" data-chip="decor"></div>
+
+  <main id="main" class="page-decor">
+    <!-- Figma 187:4695（主要狀態）；點「售後服務」= 187:4465（遮罩只蓋 .decor-main，由 core.js 產生）。
+         編號、價格、說明文字與縮圖由 js/pages/decor.js 依 data.js 的 decor-013 填入。 -->
+    <section class="decor-main" aria-labelledby="decor-code">
+      <figure class="decor-main__media">
+        <img class="decor-main__img" src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/decor-013-main.jpg" alt="扭轉枝幹與白色永生花、金黃花蕊組成的壁掛式花藝裝置" width="1208" height="1600" decoding="async">
+      </figure>
+      <div class="decor-main__info">
+        <header class="decor-head">
+          <h1 class="decor-head__code" id="decor-code"></h1>
+          <p class="decor-head__price"></p>
+        </header>
+        <div class="decor-copy prose"></div>
+        <ul class="decor-thumbs" aria-label="作品細節圖"></ul>
+      </div>
+    </section>
+
+    <div class="decor-actions">
+      <button class="btn btn--lg btn--ivory" type="button" data-add-to-cart="decor-013">加入購物車</button>
+      <div class="text-links">
+        <a class="text-link" href="products.html">其他商品</a>
+        <button class="text-link" type="button" data-after-sales=".decor-main" aria-haspopup="dialog">售後服務</button>
+        <a class="text-link" href="contact.html?type=decor">客製表單</a>
+      </div>
+    </div>
+
+    <div class="decor-rooms">
+      <figure class="decor-room">
+        <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/decor-room-1.jpg" alt="暖木色客廳：白色沙發、黑色單椅與木質茶几" width="666" height="1000" loading="lazy" decoding="async">
+        <img class="decor-room__art" src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/IMG_2628.JPG" alt="" aria-hidden="true" width="1024" height="1536" loading="lazy" decoding="async">
+        <figcaption class="visually-hidden">滑鼠移到照片上，可以看到 013 作品掛在這個空間的樣子。</figcaption>
+      </figure>
+      <figure class="decor-room">
+        <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/decor-room-2.jpg" alt="深色沙發與木質茶几的客廳，一旁是落地燈與陶瓶" width="890" height="1000" loading="lazy" decoding="async">
+        <img class="decor-room__art" src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/IMG_2627.JPG" alt="" aria-hidden="true" width="1024" height="1536" loading="lazy" decoding="async">
+        <figcaption class="visually-hidden">滑鼠移到照片上，可以看到 013 作品掛在這個空間的樣子。</figcaption>
+      </figure>
+      <figure class="decor-room">
+        <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/decor-room-3.jpg" alt="黑色畫作下的木質長凳、陶罐與枝葉擺設" width="657" height="1000" loading="lazy" decoding="async">
+        <img class="decor-room__art" src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/IMG_2626.JPG" alt="" aria-hidden="true" width="1024" height="1536" loading="lazy" decoding="async">
+        <figcaption class="visually-hidden">滑鼠移到照片上，可以看到 013 作品掛在這個空間的樣子。</figcaption>
+      </figure>
+      <figure class="decor-room">
+        <img src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/decor-room-4.jpg" alt="書牆前的棕色沙發、玻璃茶几與單椅" width="800" height="1000" loading="lazy" decoding="async">
+        <img class="decor-room__art" src="https://pub-6b1a46631bc645beb6f95ed1a98d6997.r2.dev/img/decor/IMG_2629.JPG" alt="" aria-hidden="true" width="1024" height="1536" loading="lazy" decoding="async">
+        <figcaption class="visually-hidden">滑鼠移到照片上，可以看到 013 作品掛在這個空間的樣子。</figcaption>
+      </figure>
+    </div>
+  </main>
+
+  <div data-mg="footer"></div>
+
+  <script src="js/icons.js?v=41"></script>
+  <script src="js/data.js?v=41"></script>
+  <script src="js/core.js?v=41"></script>
+  <script src="js/pages/decor.js?v=41"></script>
+</body>
+</html>

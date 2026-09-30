@@ -1,0 +1,153 @@
+/* 居家擺設｜Multiverse Garden
+   Figma 187:4695「居家擺設 - 商品頁面」（主要狀態，底部為居家空間照片）
+   187:4465 = 點「售後服務」後：遮罩只蓋商品主區、卡片在主區左 76／上 108（core.js 的 .mg-modal--anchored）
+   1440 寬：主區 800 高｜左圖 604×800 貼齊左邊（右側圓角 8）｜右欄 836（左右內距 40）
+            加入購物車＋文字連結（內距 40、靠右、間距 24）→ 間隔 18 → 4 張 360×412 滿版照片 → Footer */
+
+/* ---------- 商品主區 ---------- */
+.decor-main {
+  display: grid;
+  grid-template-columns: minmax(0, 604fr) minmax(0, 836fr);
+  align-items: start;
+  max-width: var(--page-max);
+  margin-inline: auto;
+}
+
+/* 「商品大圖」元件：左側直角、右側圓角 8 */
+.decor-main__media {
+  aspect-ratio: 604 / 800;
+  overflow: hidden;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--bg-elevated);
+}
+.decor-main__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 右欄：編號價格在上、說明文字、4 張縮圖貼齊主圖底部 */
+.decor-main__info {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-width: 0;
+  padding: 0 var(--page-gutter) 0 40px;
+}
+
+/* 編號與價格：整塊靠右（Figma「Frame 87 / 115」ai=MAX） */
+.decor-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-self: flex-end;
+  text-align: right;
+}
+.decor-head__code { font: var(--text-code); }
+.decor-head__price { font: var(--text-body-bold); }
+
+/* 斷行只落在標點／空白（同 Figma 157:1311 的 16px 版本在「交織乾燥葉片，」後換行），
+   放不下時才任意斷 */
+.decor-copy {
+  padding: 16px 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.decor-copy__block + .decor-copy__block { margin-top: 24px; } /* 段落間空一行 */
+
+/* 縮圖 160×192，四張左右對齊（1440 時間距 38.67） */
+.decor-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 5.115%;
+  margin-top: auto;
+}
+.decor-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 160 / 192;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+.decor-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur) var(--ease);
+}
+.decor-thumb:hover img { transform: scale(1.02); }
+
+/* ---------- 加入購物車 + 其他商品／售後服務／客製表單 ---------- */
+.decor-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: 40px var(--page-gutter);
+}
+.decor-actions .text-links {
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 30px; /* Figma 文字列高 30 */
+}
+
+/* ---------- 底部 4 張居家空間照片（Figma「Frame 165」，1px 內框線） ---------- */
+.decor-rooms {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+}
+/* 四張空間照：平常是空間本身，滑鼠移上去淡入「作品已經掛上牆」的那張。
+   兩張圖同樣尺寸疊在一起，所以只是單純的交叉淡入。觸控裝置沒有 hover，
+   改成點一下切換（js/pages/decor.js 加上 .is-art）。 */
+.decor-room {
+  position: relative;
+  margin: 0;
+}
+.decor-rooms .decor-room__art {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 450ms var(--ease);
+}
+@media (hover: hover) {
+  .decor-room:hover .decor-room__art { opacity: 1; }
+}
+.decor-room.is-art .decor-room__art { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .decor-rooms .decor-room__art { transition: none; }
+}
+.decor-rooms img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 360 / 412;
+  object-fit: cover;
+  outline: 1px solid var(--border-default);
+  outline-offset: -1px;
+}
+/* ---------- Responsive ---------- */
+/* 600 以上維持設計稿的左右兩欄（縮圖一排 4 張）；
+   < 600（手機）才改單欄：主圖（滿版）→ 縮圖 → 編號價格 → 說明 → 加入購物車／連結 → 照片 2×2 */
+@media (max-width: 599px) {
+  .decor-main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .decor-main__info { display: contents; }
+  .decor-main__media { order: 1; border-radius: 0; }
+  .decor-thumbs {
+    order: 2;
+    column-gap: 8px;
+    margin-top: 0;
+    padding-inline: var(--page-gutter);
+  }
+  .decor-head { order: 3; margin-right: var(--page-gutter); }
+  .decor-copy { order: 4; padding: 0 var(--page-gutter); }
+  .decor-rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
